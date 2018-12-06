@@ -4,6 +4,7 @@ def main():
 
     logs.sort()
     print('Case 1: %d' % solve_case_1(logs))
+    print('Case 2: %d' % solve_case_2(logs))
 
 
 def solve_case_1(logs):
@@ -24,6 +25,22 @@ def solve_case_1(logs):
             m_sleep_min = i
 
     return m_sleep_guard * m_sleep_min
+
+def solve_case_2(logs):
+    guards = create_sleep_charts(logs)
+    m_guard_id = None
+    m_sleep_min = None
+    m_sleep_count = 0
+
+    for g in guards:
+        l = guards[g]
+        for i in xrange(60):
+            if l[i] > m_sleep_count:
+                m_sleep_count = l[i]
+                m_guard_id = g
+                m_sleep_min = i
+
+    return m_guard_id * m_sleep_min
 
 def create_sleep_charts(logs):
     guards = dict()
