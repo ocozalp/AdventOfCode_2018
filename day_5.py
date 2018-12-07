@@ -9,6 +9,7 @@ def main():
         l = f.readline()[:-1]
 
     print('Case 1: %d' % solve_case_1(l))
+    print('Case 2: %d' % solve_case_2(l))
 
 def solve_case_1(l):
     head_node = create_linked_list(l)
@@ -33,7 +34,8 @@ def solve_case_1(l):
             else:
                 new_current = current.prev
                 new_current.next = current.next
-                current.next.prev = new_current
+                if current.next is not None:
+                    current.next.prev = new_current
                 current = new_current
         else:
             # proceed
@@ -46,6 +48,18 @@ def solve_case_1(l):
         current_node = current_node.next
 
     return len(letters)
+
+def solve_case_2(l):
+    result = len(l)
+    for c in xrange(ord('A'), ord('Z')+1):
+        up_case = chr(c)
+        low_case = chr(c+32)
+
+        l1 = l.replace(up_case, '').replace(low_case, '')
+
+        result = min(result, solve_case_1(l1))
+
+    return result
 
 def create_linked_list(l):
     result = Node(ord(l[0]))
